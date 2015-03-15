@@ -1,7 +1,10 @@
 /*
 /*/
-/IterLasso/test/
+/IterLasso/*
+/IterLasso/*/
 !.gitignore
 !/src/
 !/IterLasso/
+!/IterLasso/interactive_build.sub
+!/IterLasso/Makefile
 !/IterLasso/src/
