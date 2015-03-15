@@ -1,7 +1,11 @@
 function runIterativeLasso(jobdir)
 	if nargin == 0
 		params = loadjson('params.json')
-		jobdir = params.expdir;
+    if isfield(params,'expdir')
+      jobdir = params.expdir;
+    else
+      jobdir = './';
+    end
 	else
 		params = loadjson(fullfile(jobdir,'params.json'));
 	end
@@ -16,6 +20,11 @@ function runIterativeLasso(jobdir)
 	target = params.target;
 	nMRIrun = size(metadata.mriRuns,2);
 
+	disp(metadata)
+	y = double(metadata.(target));
+	ncv = size(metadata.CVBLOCKS,2);
+	CVB = metadata.CVBLOCKS;
+
   %% Subset data by TR
   if isfield(params,'TR')
     assert(params.TR <= 5)
@@ -26,12 +35,9 @@ function runIterativeLasso(jobdir)
       TRs = 1:size(X,1);
     end
     X = X(TRs,:);
+    y = y(TRs);
+    CVB = CVB(TRs,:);
   end
-
-	disp(metadata)
-	y = double(metadata.(target));
-	ncv = size(metadata.CVBLOCKS,2);
-	CVB = metadata.CVBLOCKS;
 
 	% zscore by run
 	Xc = mat2cell(X,repmat(nMRIrun,size(X,1)/nMRIrun,1),size(X,2));
