@@ -9,17 +9,17 @@ IDIRS=
 
 all: IterLasso binaries.tar.gz
 
-source_code.tar.gz: src dependencies
+source_code.tar.gz:
 	tar czhf source_code.tar.gz src dependencies
 
-extract: source_code.tar.gz
+extract:
 	-mkdir source_code/
 	tar xzf source_code.tar.gz -C ./source_code/
 
 IterLasso: $(SRCDIR)/runIterativeLasso.m
 	$(MCC) $(MFLAGS) $(IDIRS) -o $@ runIterativeLasso.m 
 
-binaries.tar.gz: SOSLasso run_SOSLasso.sh summarize_jobs run_summarize_jobs.sh
+binaries.tar.gz: IterLasso run_IterLasso.sh
 	mkdir bin/
 	mv IterLasso run_IterLasso.sh bin/
 	tar czvf $@ bin/
