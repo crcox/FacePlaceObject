@@ -86,7 +86,12 @@ function runIterativeLasso(jobdir)
 	[finalModel,iterModels,finalTune,iterTune] = iterativelasso(X,y,CVB,'ExpDir',jobdir);
 
 	%% Save Results to Disk
-	save('VoxelAndItemSelection.mat','ROISelection','retain');
+	if isfield(params,'ROI')
+    save('VoxelAndItemSelection.mat','ROISelection','retain');
+  else
+    save('VoxelAndItemSelection.mat','retain');
+  end
+
 	if ~isempty(fieldnames(finalModel))
     save('finalModel.mat','finalModel');
     save('finalTune.mat','finalTune');
