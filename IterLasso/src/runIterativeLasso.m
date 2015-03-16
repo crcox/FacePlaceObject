@@ -78,9 +78,9 @@ function runIterativeLasso(jobdir)
 		CVB = CVB(retain.stimuli,:);
 	end
 
-	if ~all(retain.voxels)
-		ijk = ijk(retain.voxels,:);
-	end
+%	if ~all(retain.voxels)
+%		ijk = ijk(retain.voxels,:);
+%	end
 
 	%% Run Iterative Lasso
 	[finalModel,iterModels,finalTune,iterTune] = iterativelasso(X,y,CVB,'ExpDir',jobdir);
